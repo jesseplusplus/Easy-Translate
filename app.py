@@ -230,7 +230,6 @@ def main(
         print(
             f"** Translation **\n"
             f"Input file: {sentences_path}\n"
-            f"Sentences dir: {sentences_dir}\n"
             f"Output file: {output_path}\n"
             f"Source language: {source_lang}\n"
             f"Target language: {target_lang}\n"
