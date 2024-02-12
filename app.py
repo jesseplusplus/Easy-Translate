@@ -2,6 +2,7 @@ import os
 import math
 import argparse
 import glob
+import gradio
 
 import torch
 from torch.utils.data import DataLoader
@@ -558,3 +559,6 @@ if __name__ == "__main__":
         prompt=args.prompt,
         trust_remote_code=args.trust_remote_code,
     )
+
+demo = gradio.Interface(fn=main, inputs="textbox", outputs="textbox")
+demo.launch(share=True)
