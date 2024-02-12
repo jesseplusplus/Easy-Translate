@@ -362,203 +362,203 @@ def main(
     print(f"Translation done.\n")
 
 
-if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Run the translation experiments")
-    input_group = parser.add_mutually_exclusive_group(required=True)
-    input_group.add_argument(
-        "--sentences_path",
-        default=None,
-        type=str,
-        help="Path to a txt file containing the sentences to translate. One sentence per line.",
-    )
+# if __name__ == "__main__":
+#     parser = argparse.ArgumentParser(description="Run the translation experiments")
+#     input_group = parser.add_mutually_exclusive_group(required=True)
+#     input_group.add_argument(
+#         "--sentences_path",
+#         default=None,
+#         type=str,
+#         help="Path to a txt file containing the sentences to translate. One sentence per line.",
+#     )
 
-    input_group.add_argument(
-        "--sentences_dir",
-        type=str,
-        default=None,
-        help="Path to a directory containing the sentences to translate. "
-        "Sentences must be in  .txt files containing containing one sentence per line.",
-    )
+#     input_group.add_argument(
+#         "--sentences_dir",
+#         type=str,
+#         default=None,
+#         help="Path to a directory containing the sentences to translate. "
+#         "Sentences must be in  .txt files containing containing one sentence per line.",
+#     )
 
-    parser.add_argument(
-        "--files_extension",
-        type=str,
-        default="txt",
-        help="If sentences_dir is specified, extension of the files to translate. Defaults to txt. "
-        "If set to an empty string, we will translate all files in the directory.",
-    )
+#     parser.add_argument(
+#         "--files_extension",
+#         type=str,
+#         default="txt",
+#         help="If sentences_dir is specified, extension of the files to translate. Defaults to txt. "
+#         "If set to an empty string, we will translate all files in the directory.",
+#     )
 
-    parser.add_argument(
-        "--output_path",
-        type=str,
-        required=True,
-        help="Path to a txt file where the translated sentences will be written. If the input is a directory, "
-        "the output will be a directory with the same structure.",
-    )
+#     parser.add_argument(
+#         "--output_path",
+#         type=str,
+#         required=True,
+#         help="Path to a txt file where the translated sentences will be written. If the input is a directory, "
+#         "the output will be a directory with the same structure.",
+#     )
 
-    parser.add_argument(
-        "--source_lang",
-        type=str,
-        default=None,
-        required=False,
-        help="Source language id. See: supported_languages.md. Required for m2m100 and nllb200",
-    )
+#     parser.add_argument(
+#         "--source_lang",
+#         type=str,
+#         default=None,
+#         required=False,
+#         help="Source language id. See: supported_languages.md. Required for m2m100 and nllb200",
+#     )
 
-    parser.add_argument(
-        "--target_lang",
-        type=str,
-        default=None,
-        required=False,
-        help="Source language id. See: supported_languages.md. Required for m2m100 and nllb200",
-    )
+#     parser.add_argument(
+#         "--target_lang",
+#         type=str,
+#         default=None,
+#         required=False,
+#         help="Source language id. See: supported_languages.md. Required for m2m100 and nllb200",
+#     )
 
-    parser.add_argument(
-        "--starting_batch_size",
-        type=int,
-        default=128,
-        help="Starting batch size, we will automatically reduce it if we find an OOM error."
-        "If you use multiple devices, we will divide this number by the number of devices.",
-    )
+#     parser.add_argument(
+#         "--starting_batch_size",
+#         type=int,
+#         default=128,
+#         help="Starting batch size, we will automatically reduce it if we find an OOM error."
+#         "If you use multiple devices, we will divide this number by the number of devices.",
+#     )
 
-    parser.add_argument(
-        "--model_name",
-        type=str,
-        default="facebook/m2m100_1.2B",
-        help="Path to the model to use. See: https://huggingface.co/models",
-    )
+#     parser.add_argument(
+#         "--model_name",
+#         type=str,
+#         default="facebook/m2m100_1.2B",
+#         help="Path to the model to use. See: https://huggingface.co/models",
+#     )
 
-    parser.add_argument(
-        "--lora_weights_name_or_path",
-        type=str,
-        default=None,
-        help="If the model uses LoRA weights, path to those weights. See: https://github.com/huggingface/peft",
-    )
+#     parser.add_argument(
+#         "--lora_weights_name_or_path",
+#         type=str,
+#         default=None,
+#         help="If the model uses LoRA weights, path to those weights. See: https://github.com/huggingface/peft",
+#     )
 
-    parser.add_argument(
-        "--force_auto_device_map",
-        action="store_true",
-        help=" Whether to force the use of the auto device map. If set to True, "
-        "the model will be split across GPUs and CPU to fit the model in memory. "
-        "If set to False, a full copy of the model will be loaded  into each GPU. Defaults to False.",
-    )
+#     parser.add_argument(
+#         "--force_auto_device_map",
+#         action="store_true",
+#         help=" Whether to force the use of the auto device map. If set to True, "
+#         "the model will be split across GPUs and CPU to fit the model in memory. "
+#         "If set to False, a full copy of the model will be loaded  into each GPU. Defaults to False.",
+#     )
 
-    parser.add_argument(
-        "--max_length",
-        type=int,
-        default=256,
-        help="Maximum number of tokens in the source sentence and generated sentence. "
-        "Increase this value to translate longer sentences, at the cost of increasing memory usage.",
-    )
+#     parser.add_argument(
+#         "--max_length",
+#         type=int,
+#         default=256,
+#         help="Maximum number of tokens in the source sentence and generated sentence. "
+#         "Increase this value to translate longer sentences, at the cost of increasing memory usage.",
+#     )
 
-    parser.add_argument(
-        "--num_beams",
-        type=int,
-        default=5,
-        help="Number of beams for beam search, m2m10 author recommends 5, but it might use too much memory",
-    )
+#     parser.add_argument(
+#         "--num_beams",
+#         type=int,
+#         default=5,
+#         help="Number of beams for beam search, m2m10 author recommends 5, but it might use too much memory",
+#     )
 
-    parser.add_argument(
-        "--num_return_sequences",
-        type=int,
-        default=1,
-        help="Number of possible translation to return for each sentence (num_return_sequences<=num_beams).",
-    )
+#     parser.add_argument(
+#         "--num_return_sequences",
+#         type=int,
+#         default=1,
+#         help="Number of possible translation to return for each sentence (num_return_sequences<=num_beams).",
+#     )
 
-    parser.add_argument(
-        "--precision",
-        type=str,
-        default=None,
-        choices=["bf16", "fp16", "32", "4", "8"],
-        help="Precision of the model. bf16, fp16 or 32, 8 , 4 "
-        "(4bits/8bits quantification, requires bitsandbytes library: https://github.com/TimDettmers/bitsandbytes). "
-        "If None, we will use the torch.dtype of the model weights.",
-    )
+#     parser.add_argument(
+#         "--precision",
+#         type=str,
+#         default=None,
+#         choices=["bf16", "fp16", "32", "4", "8"],
+#         help="Precision of the model. bf16, fp16 or 32, 8 , 4 "
+#         "(4bits/8bits quantification, requires bitsandbytes library: https://github.com/TimDettmers/bitsandbytes). "
+#         "If None, we will use the torch.dtype of the model weights.",
+#     )
 
-    parser.add_argument(
-        "--do_sample",
-        action="store_true",
-        help="Use sampling instead of beam search.",
-    )
+#     parser.add_argument(
+#         "--do_sample",
+#         action="store_true",
+#         help="Use sampling instead of beam search.",
+#     )
 
-    parser.add_argument(
-        "--temperature",
-        type=float,
-        default=0.8,
-        help="Temperature for sampling, value used only if do_sample is True.",
-    )
+#     parser.add_argument(
+#         "--temperature",
+#         type=float,
+#         default=0.8,
+#         help="Temperature for sampling, value used only if do_sample is True.",
+#     )
 
-    parser.add_argument(
-        "--top_k",
-        type=int,
-        default=100,
-        help="If do_sample is True, will sample from the top k most likely tokens.",
-    )
+#     parser.add_argument(
+#         "--top_k",
+#         type=int,
+#         default=100,
+#         help="If do_sample is True, will sample from the top k most likely tokens.",
+#     )
 
-    parser.add_argument(
-        "--top_p",
-        type=float,
-        default=0.75,
-        help="If do_sample is True, will sample from the top k most likely tokens.",
-    )
+#     parser.add_argument(
+#         "--top_p",
+#         type=float,
+#         default=0.75,
+#         help="If do_sample is True, will sample from the top k most likely tokens.",
+#     )
 
-    parser.add_argument(
-        "--keep_special_tokens",
-        action="store_true",
-        help="Keep special tokens in the decoded text.",
-    )
+#     parser.add_argument(
+#         "--keep_special_tokens",
+#         action="store_true",
+#         help="Keep special tokens in the decoded text.",
+#     )
 
-    parser.add_argument(
-        "--keep_tokenization_spaces",
-        action="store_true",
-        help="Do not clean spaces in the decoded text.",
-    )
+#     parser.add_argument(
+#         "--keep_tokenization_spaces",
+#         action="store_true",
+#         help="Do not clean spaces in the decoded text.",
+#     )
 
-    parser.add_argument(
-        "--repetition_penalty",
-        type=float,
-        default=None,
-        help="Repetition penalty.",
-    )
+#     parser.add_argument(
+#         "--repetition_penalty",
+#         type=float,
+#         default=None,
+#         help="Repetition penalty.",
+#     )
 
-    parser.add_argument(
-        "--prompt",
-        type=str,
-        default=None,
-        help="Prompt to use for generation. "
-        "It must include the special token %%SENTENCE%% which will be replaced by the sentence to translate.",
-    )
+#     parser.add_argument(
+#         "--prompt",
+#         type=str,
+#         default=None,
+#         help="Prompt to use for generation. "
+#         "It must include the special token %%SENTENCE%% which will be replaced by the sentence to translate.",
+#     )
 
-    parser.add_argument(
-        "--trust_remote_code",
-        action="store_true",
-        help="If set we will trust remote code in HuggingFace models. This is required for some models.",
-    )
+#     parser.add_argument(
+#         "--trust_remote_code",
+#         action="store_true",
+#         help="If set we will trust remote code in HuggingFace models. This is required for some models.",
+#     )
 
-    args = parser.parse_args()
+#     args = parser.parse_args()
 
-    main(
-        sentences_path=args.sentences_path,
-        sentences_dir=args.sentences_dir,
-        files_extension=args.files_extension,
-        output_path=args.output_path,
-        source_lang=args.source_lang,
-        target_lang=args.target_lang,
-        starting_batch_size=args.starting_batch_size,
-        model_name=args.model_name,
-        max_length=args.max_length,
-        num_beams=args.num_beams,
-        num_return_sequences=args.num_return_sequences,
-        precision=args.precision,
-        do_sample=args.do_sample,
-        temperature=args.temperature,
-        top_k=args.top_k,
-        top_p=args.top_p,
-        keep_special_tokens=args.keep_special_tokens,
-        keep_tokenization_spaces=args.keep_tokenization_spaces,
-        repetition_penalty=args.repetition_penalty,
-        prompt=args.prompt,
-        trust_remote_code=args.trust_remote_code,
-    )
+#     main(
+#         sentences_path=args.sentences_path,
+#         sentences_dir=args.sentences_dir,
+#         files_extension=args.files_extension,
+#         output_path=args.output_path,
+#         source_lang=args.source_lang,
+#         target_lang=args.target_lang,
+#         starting_batch_size=args.starting_batch_size,
+#         model_name=args.model_name,
+#         max_length=args.max_length,
+#         num_beams=args.num_beams,
+#         num_return_sequences=args.num_return_sequences,
+#         precision=args.precision,
+#         do_sample=args.do_sample,
+#         temperature=args.temperature,
+#         top_k=args.top_k,
+#         top_p=args.top_p,
+#         keep_special_tokens=args.keep_special_tokens,
+#         keep_tokenization_spaces=args.keep_tokenization_spaces,
+#         repetition_penalty=args.repetition_penalty,
+#         prompt=args.prompt,
+#         trust_remote_code=args.trust_remote_code,
+#     )
 
 demo = gradio.Interface(fn=main, inputs="textbox", outputs="textbox")
 demo.launch(share=True)
