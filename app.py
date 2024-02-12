@@ -89,7 +89,7 @@ def main(
     trust_remote_code: bool = False,
 ):
     accelerator = Accelerator()
-    sentences_path = "sample_text/en.txt"
+    sentences_path = "sample_text/en.small.txt"
     output_path = "sample_text/en2es.translation.m2m100_12B.txt"
 
     if force_auto_device_map and starting_batch_size >= 64:
