@@ -68,13 +68,9 @@ def get_dataloader(
 
 
 def main(
-    sentences_path: Optional[str],
-    sentences_dir: Optional[str],
-    files_extension: str,
-    output_path: str,
     source_lang: Optional[str],
     target_lang: Optional[str],
-    starting_batch_size: int,
+    starting_batch_size: int = 8,
     model_name: str = "facebook/m2m100_1.2B",
     lora_weights_name_or_path: str = None,
     force_auto_device_map: bool = False,
@@ -93,6 +89,8 @@ def main(
     trust_remote_code: bool = False,
 ):
     accelerator = Accelerator()
+    sentences_path = "sample_text/en.txt"
+    output_path = "sample_text/en2es.translation.m2m100_12B.txt"
 
     if force_auto_device_map and starting_batch_size >= 64:
         print(
@@ -100,16 +98,6 @@ def main(
             f"auto_device_map will offload model parameters to the CPU when they don't fit on the GPU VRAM. "
             f"If you use a very large batch size, it will offload a lot of parameters to the CPU and slow down the "
             f"inference. You should consider using a smaller batch size, i.e '--starting_batch_size 8'"
-        )
-
-    if sentences_path is None and sentences_dir is None:
-        raise ValueError(
-            "You must specify either --sentences_path or --sentences_dir. Use --help for more details."
-        )
-
-    if sentences_path is not None and sentences_dir is not None:
-        raise ValueError(
-            "You must specify either --sentences_path or --sentences_dir, not both. Use --help for more details."
         )
 
     if precision is None:
@@ -346,20 +334,9 @@ def main(
         os.makedirs(os.path.abspath(os.path.dirname(output_path)), exist_ok=True)
         inference(sentences_path=sentences_path, output_path=output_path)
 
-    if sentences_dir is not None:
-        print(
-            f"Translating all files in {sentences_dir}, with extension {files_extension}"
-        )
-        os.makedirs(os.path.abspath(output_path), exist_ok=True)
-        for filename in glob.glob(
-            os.path.join(
-                sentences_dir, f"*.{files_extension}" if files_extension else "*"
-            )
-        ):
-            output_filename = os.path.join(output_path, os.path.basename(filename))
-            inference(sentences_path=filename, output_path=output_filename)
-
     print(f"Translation done.\n")
+    with open(output_path, "r", encoding="utf-8") as f:
+        return f.read()
 
 
 # if __name__ == "__main__":
@@ -560,5 +537,5 @@ def main(
 #         trust_remote_code=args.trust_remote_code,
 #     )
 
-demo = gradio.Interface(fn=main, inputs="textbox", outputs="textbox")
+demo = gradio.Interface(fn=main, inputs=["textbox", "textbox"], outputs="textbox")
 demo.launch(share=True)
