@@ -9,6 +9,19 @@ app_file: app.py
 pinned: false
 ---
 
+# Run EasyTranslate as a Gradio app on HuggingFace
+
+* Create a new Space on HuggingFace
+* Do not clone the starter repository it creates for you
+* Instead, copy the url of the repository (looks like https://huggingface.co/spaces/me/name)
+* Run the following commands:
+
+```
+$ git clone https://github.com/jesseplusplus/Easy-Translate
+$ git remote add hf https://huggingface.co/spaces/me/name
+$ git push hf
+```
+
 <p align="center">
     <br>
     <img src="images/title.png" width="900"/>
