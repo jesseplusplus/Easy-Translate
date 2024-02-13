@@ -71,8 +71,8 @@ def main(
     input_string: str,
     source_lang: Optional[str],
     target_lang: Optional[str],
-    starting_batch_size: int = 8,
     model_name: str = "facebook/m2m100_1.2B",
+    starting_batch_size: int = 8,
     lora_weights_name_or_path: str = None,
     force_auto_device_map: bool = False,
     precision: str = None,
@@ -539,5 +539,5 @@ def main(
 #         trust_remote_code=args.trust_remote_code,
 #     )
 
-demo = gradio.Interface(fn=main, inputs=["textbox", "textbox", "textbox"], outputs="textbox")
-demo.launch(share=True)
+demo = gradio.Interface(fn=main, inputs=["textbox", "textbox", "textbox", "textbox"], outputs="textbox")
+demo.launch()
