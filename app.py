@@ -68,6 +68,7 @@ def get_dataloader(
 
 
 def main(
+    input_string: str,
     source_lang: Optional[str],
     target_lang: Optional[str],
     starting_batch_size: int = 8,
@@ -89,8 +90,10 @@ def main(
     trust_remote_code: bool = False,
 ):
     accelerator = Accelerator()
-    sentences_path = "sample_text/en.small.txt"
-    output_path = "sample_text/en2es.translation.m2m100_12B.txt"
+    sentences_path = "input.txt"
+    output_path = "output.txt"
+    with open(sentences_path, "w", encoding="utf-8") as f:
+        f.write(input_string)
 
     if force_auto_device_map and starting_batch_size >= 64:
         print(
@@ -536,5 +539,5 @@ def main(
 #         trust_remote_code=args.trust_remote_code,
 #     )
 
-demo = gradio.Interface(fn=main, inputs=["textbox", "textbox"], outputs="textbox")
+demo = gradio.Interface(fn=main, inputs=["textbox", "textbox", "textbox"], outputs="textbox")
 demo.launch(share=True)
